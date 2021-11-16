@@ -4,60 +4,84 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 import icecream as ic
-
 from user.model_data import DbUploader
 from user.models import User
 from user.serializers import UserSerializer
 
 
-@api_view(['GET', 'POST', 'PUT'])
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @parser_classes([JSONParser])
-def user(request):
-    print('======================================')
-    if request.method == 'GET': #list
-        all_users = User.object.all()
-        serializer = UserSerializer(all_users, many=True)
-        return JsonResponse(data=serializer, safe=False)
-    elif request.method == 'POST': #join
-        # print('=============ddddd=================')
-        new_user = request.data
-        print(f'><><><><><><><><><><{new_user}')
-        # print('=============dsfsdf=================')
-        serializer = UserSerializer(data=new_user)
-        print(f'{serializer}')
-        # ic('==============================================')
-        if serializer.is_valid():
-            print('*****************************************')
-            serializer.save()
-            return JsonResponse({'result': f'Welcome,{serializer.data.get("name")}'}, status=201)
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def users(request):
+    try:
+        if request.method == 'GET':
+            all_users = User.objects.all().values()
+            serializer = UserSerializer(all_users, many=True)
+            return JsonResponse(data=serializer.data, safe=False)
+        elif request.method == 'POST':
+            new_user = request.data
+            serializer = UserSerializer(data=new_user)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse({'join': 'SUCCESS'})
+            return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'PUT':
+            modifyemail = request.data
+            user = User.objects.get(id=modifyemail['id'])
+            dbuser = User.objects.all().filter(id=modifyemail['id']).values()[0]
+            for i in modifyemail:
+                dbuser[i] = modifyemail[i]
+            serializer = UserSerializer(data=dbuser)
+            if serializer.is_valid():
+                serializer.update(user, dbuser)
+            return JsonResponse({'modify': 'SUCCESS'})
+        elif request.method == 'DELETE':
+            if User.password == request.data['password']:
+                del_user = User.objects.get(password=login['password'])
+                del_user.delete()
+                return JsonResponse({'remove': 'SUCCESS'})
+            else:
+                return JsonResponse({'remove': 'error'})
+
+    except:
+        return JsonResponse({'users': 'fail'})
 
 
 @api_view(['POST'])
+@parser_classes([JSONParser])
 def login(request):
     try:
-        print('들어왔다고 해줘........여기까지만이라도.........................')
-        loginUser = request.data
-        print(f'============={type(loginUser)}')
-        dbUser = User.objects.get(email=loginUser['email'])
-        print(f'{dbUser}')
-        if loginUser['password'] == dbUser.password:
-            print('======================로그인 성공')
+        loginuser = request.data
+        dbUser = User.objects.get(user_email=loginuser['user_email'])
+        if loginuser['password'] == dbUser.password:
             userSerializer = UserSerializer(dbUser, many=False)
             return JsonResponse(data=userSerializer.data, safe=False)
-        else:
-            print('===========================비밀번호 오류')
-            return JsonResponse(data={'rsult' :'PASSWORD-FAIL' }, status= 201)
-        return JsonResponse(data=serializer, safe=False)
-    except User.DoesNotExist:
-        print('*' *100)
-        print('에러에러에러에러에러 발생!!!!!!!!!!!!!!!!!!!!!')
-        return JsonResponse(data={'result':'USERNAME-FAIL'}, status=201)
+    except:
+        return JsonResponse({'login':'fail'})
 
 
 @api_view(['GET'])
-@parser_classes([JSONParser])
-def upload(request):
-    print('######## 1 ########')
-    DbUploader().insert_data()
-    return JsonResponse({'Product Upload': 'SUCCEESS'})
+def user(request):
+    try:
+        return JsonResponse({'find': 'SUCCESS'})
+    except:
+        return JsonResponse({'find': 'fail'})
+
+
+@api_view(['GET'])
+def exist(request):
+    try:
+        joinuseremail = request.data
+        existck = User.objects.all().filter(user_email=joinuseremail['user_email']).values()[0]
+        if joinuseremail['user_email'] == existck['user_email']:
+            return JsonResponse({'exist': '해당 이메일은 있습니다'})
+    except:
+        return JsonResponse({'exist':'사용 가능합니다.'})
+
+
+
+# @api_view(['GET'])
+# @parser_classes([JSONParser])
+# def upload(request):
+#     print('######## 1 ########')
+#     DbUploader().insert_data()
+#     return JsonResponse({'Product Upload': 'SUCCEESS'})

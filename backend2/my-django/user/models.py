@@ -8,7 +8,7 @@ class User(models.Model):
     user_name = models.TextField()
     phone = models.TextField()
     age = models.TextField()
-    address = models.TextField()
+    address = models.TextField(blank=True)
     job = models.TextField()
     user_interests = models.TextField()
     login_type = models.TextField()
