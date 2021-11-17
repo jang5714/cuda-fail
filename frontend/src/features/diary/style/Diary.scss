@@ -1,0 +1,23 @@
+.dairy_container {
+    display: grid;
+    grid-template-columns: 650px minmax(420px, 1fr);
+    grid-template-rows:  1fr, 1fr ;
+    justify-items: center;
+
+  }
+  .dairy_wrapper {
+    display: flex;
+
+
+  }
+  .dairy-img {
+    object-fit: scale-down;
+    max-width: 200px;
+    max-height: 200px;
+    
+  }
+  .sketch-img{
+    max-width: 500px;
+    max-height: 500px;
+  }
+  

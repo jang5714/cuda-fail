@@ -83,6 +83,14 @@ def exist(request):
         return JsonResponse({'exist':'사용 가능합니다.'})
 
 
+# def kakaoSign(request):
+#     app_key = KAKAO_REST_API_KEY
+#     redirect_uri = 'https://localhost:8000/api/user/kakao/callback'
+#     kako_auth_api = 'https://kauth.kakao.com/oauth/authorize?response_type=code'
+#     return redirect(
+#         f'{kako_auth_api&}&client_id={app_key}&redirect_uri={redirect_uri}'
+#     )
+
 
 # @api_view(['GET'])
 # @parser_classes([JSONParser])

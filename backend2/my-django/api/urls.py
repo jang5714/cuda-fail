@@ -24,6 +24,6 @@ from api.views import HelloAPI
 urlpatterns = [
     path('', HelloAPI),
     path('api/hello', HelloAPI),
-    path('api/user/', include('user.url')),
+    path('api/users/', include('user.url')),
     path('api/board/', include('board.url')),
 ]

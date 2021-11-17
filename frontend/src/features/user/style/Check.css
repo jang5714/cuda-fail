@@ -1,0 +1,170 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.hide {
+  display: none;
+}
+
+.modal {
+  z-index: 9999;
+  position: fixed;
+  display: block;
+  width: 59%;
+  height: 57%;
+  background: transparent;
+  border-radius: .2em;
+}
+
+.check {
+  position: absolute;
+  top: 83%;
+  left: 70%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: inline-block;
+  height: 3em;
+  width: 10em;
+  line-height: 3em;
+  border-radius: 1.5em;
+  font-weight: 700;
+  background: wheat;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.modal .inside {
+  display: none;
+  position: absolute;
+  left: 298px;
+  top: 168px;
+  width: 87%;
+  height: 102%;
+  text-align: center;
+  padding: 2em;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+.inside label {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+  padding: 0;
+  position: relative;
+}
+
+.inside div {
+  margin: 0;
+  text-align: center;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.inside .btn-close {
+  position: absolute;
+  top: 1em;
+  right: 0em;
+  font-size: 20px;
+  text-align: center;
+  width: 2em;
+  line-height: 3em;
+  cursor: pointer;
+}
+
+#modalToggle:checked ~ .modal .btn-open {
+  -webkit-animation-name: btnExpand;
+          animation-name: btnExpand;
+}
+
+#modalToggle:checked ~ .modal .inside {
+  display: block;
+  -webkit-animation-name: delayedFadeIn;
+          animation-name: delayedFadeIn;
+}
+
+@-webkit-keyframes btnExpand {
+  15% {
+    color: transparent;
+    width: 10em;
+  }
+  35% {
+    width: 3em;
+    height: 3em;
+    margin: 0;
+  }
+  to {
+    width: 1000px;
+    height: 500px;
+    color: transparent;
+  }
+}
+
+@keyframes btnExpand {
+  15% {
+    color: transparent;
+    width: 10em;
+  }
+  35% {
+    width: 3em;
+    height: 3em;
+    margin: 0;
+  }
+  to {
+    width: 1000px;
+    height: 500px;
+    color: transparent;
+  }
+}
+
+@-webkit-keyframes delayedFadeIn {
+  from {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes delayedFadeIn {
+  from {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/*# sourceMappingURL=Check.css.map */
