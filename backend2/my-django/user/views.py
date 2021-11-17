@@ -23,6 +23,8 @@ def users(request):
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse({'join': 'SUCCESS'})
+            else:
+                return JsonResponse({'join': 'fail'})
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         elif request.method == 'PUT':
             modifyemail = request.data
@@ -35,9 +37,10 @@ def users(request):
                 serializer.update(user, dbuser)
             return JsonResponse({'modify': 'SUCCESS'})
         elif request.method == 'DELETE':
-            if User.password == request.data['password']:
-                del_user = User.objects.get(password=login['password'])
-                del_user.delete()
+            deluser = request.data
+            dbuser = User.objects.get(user_email=deluser['user_email'])
+            if deluser['user_email'] == dbuser.user_email:
+                dbuser.delete()
                 return JsonResponse({'remove': 'SUCCESS'})
             else:
                 return JsonResponse({'remove': 'error'})
@@ -62,7 +65,9 @@ def login(request):
 @api_view(['GET'])
 def user(request):
     try:
-        return JsonResponse({'find': 'SUCCESS'})
+        finduser = request.data
+        dbUser = User.objects.all().filter(user_email=finduser['user_email']).values()[0]
+        return JsonResponse(data=dbUser, safe=False)
     except:
         return JsonResponse({'find': 'fail'})
 
