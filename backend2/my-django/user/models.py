@@ -7,7 +7,7 @@ class User(models.Model):
     password = models.CharField(max_length=10)
     user_name = models.TextField()
     phone = models.TextField()
-    age = models.TextField()
+    birth = models.TextField()
     address = models.TextField(blank=True)
     job = models.TextField()
     user_interests = models.TextField()

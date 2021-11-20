@@ -23,8 +23,6 @@ def users(request):
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse({'join': 'SUCCESS'})
-            else:
-                return JsonResponse({'join': 'fail'})
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         elif request.method == 'PUT':
             modifyemail = request.data

@@ -18,7 +18,7 @@ class UserSerializer(serializers.Serializer):
     password = serializers.CharField()
     user_name = serializers.CharField()
     phone = serializers.CharField()
-    age = serializers.CharField()
+    birth = serializers.CharField()
     address = serializers.CharField()
     job = serializers.CharField()
     user_interests = serializers.CharField()
