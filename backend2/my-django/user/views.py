@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
-import icecream as ic
 from user.model_data import DbUploader
 from user.models import User
 from user.serializers import UserSerializer

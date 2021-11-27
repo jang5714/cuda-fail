@@ -5,5 +5,6 @@ from django.urls import path, include
 from board import views
 
 urlpatterns = [
-    url(r'upload', views.upload),
+    path(r'', views.board),
+    path(r'find', views.board),
 ]

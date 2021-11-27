@@ -1,22 +1,17 @@
-import pandas as pd
-import urllib.request
-import tensorflow_datasets as tfds
-import tensorflow as tf
-import time
-import numpy as np
-import matplotlib.pyplot as plt
-import re
+from django.db import models
 
-urllib.request.urlretrieve("https://raw.githubusercontent.com/songys/Chatbot_data/master/ChatbotData.csv", filename="ChatBotData.csv")
-
-train_data = pd.read_csv('ChatBotData.csv')
-train_data.head()
 
 # Create your models here.
 class Chatbot(models.Model):
-    def __init__(self):
-        pass
+    use_in_migrations = True
+    intent = models.TextField()
+    ner = models.TextField()
+    query = models.TextField()
+    answer = models.TextField()
 
+    def __str__(self):
+        return f'{self.pk}'
 
     class Meta:
-        db_table = "chatbot"
+        db_table = "chatbot_train_data"
+
