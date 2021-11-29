@@ -8,6 +8,7 @@ from user.models import User
 from user.serializers import UserSerializer
 
 
+
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @parser_classes([JSONParser])
 def users(request):
@@ -54,7 +55,7 @@ def login(request):
         dbUser = User.objects.get(user_email=loginuser['user_email'])
         if loginuser['password'] == dbUser.password:
             userSerializer = UserSerializer(dbUser, many=False)
-            return JsonResponse(data=userSerializer.data, safe=False)
+            return JsonResponse(data=userSerializer.data, safe=False,)
     except:
         return JsonResponse({'login':'fail'})
 

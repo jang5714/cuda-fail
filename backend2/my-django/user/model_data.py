@@ -35,7 +35,6 @@ class DbUploader():
                                                job=row['job'],
                                                user_interests=row['user_interests'],
                                                login_type=row['login_type'],)
-                    print(f'1 >>>> {user}')
         print('USER DATA UPLOADED SUCCESSFULY!')
 
 

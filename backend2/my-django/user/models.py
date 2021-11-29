@@ -11,7 +11,6 @@ class User(models.Model):
     address = models.TextField(blank=True)
     job = models.TextField()
     user_interests = models.TextField()
-    login_type = models.TextField()
 
     def __str__(self):
         return f'{self.pk}'
