@@ -6,5 +6,5 @@ from board import views
 
 urlpatterns = [
     path(r'', views.board),
-    path(r'find', views.board),
+    path(r'find', views.find),
 ]

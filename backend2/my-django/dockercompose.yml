@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/my-django
+    depends_on:
+      - db
+  db:
+    image: mariadb
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root

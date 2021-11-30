@@ -24,34 +24,30 @@ def board(request):
                                  writen=u,
                                  create_at=new['create_at'],
                                  update_at=new['update_at'])
-
             return JsonResponse({'게시판': '등록 완료'})
         elif request.method == 'GET':
-            boardlist = Board.objects.all().values()
+            boardlist = Board.objects.all()
             serializer = BoardSerializer(boardlist, many=True)
             return JsonResponse(data=serializer.data, safe=False)
         elif request.method == 'PUT':
             modifyboard = request.data
+            u = User()
+            user = User.objects.all().filter(id= modifyboard['writen']).values()[0]
+            u.id = user['id']
             board = Board.objects.get(id=modifyboard['id'])
             dbboard = Board.objects.all().filter(id=modifyboard['id']).values()[0]
-            print(dbboard['title'])
             dbboard['title'] = modifyboard['title']
             dbboard['body'] = modifyboard['body']
-            dbboard['comment'] = modifyboard['title']
-            dbboard['writen_id'] = modifyboard['writen_id']
+            dbboard['writen_id'] = u.id
+            dbboard['comment'] = modifyboard['comment']
             dbboard['create_at'] = modifyboard['create_at']
             dbboard['create_at'] = modifyboard['create_at']
-            dbboard.save()
-            print(f'변경 후 : {dbboard}')
             serializer = BoardSerializer(data=dbboard)
-            print("**********************************************")
-            if serializer.is_valid():
-                serializer.update(board, dbboard)
+            serializer.update(board, dbboard)
             return JsonResponse({'board modify': 'SUCCESS'})
         elif request.method == 'DELETE':
-            dbboard = Board.objects.get(title=request.data['title'])
-            if request.data['title'] == dbboard.title:
-                dbboard.delete()
+            dbboard = Board.objects.get(id=request.data['id'])
+            dbboard.delete()
             return JsonResponse({'board delete': 'SUCCESS'})
     except:
         return JsonResponse({'board': 'fail'})
